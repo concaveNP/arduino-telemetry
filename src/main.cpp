@@ -1,18 +1,34 @@
+#include <SPI.h>
 #include <Arduino.h>
+#include <Wire.h>
+#include <Adafruit_BMP085.h>
 
-// put function declarations here:
-int myFunction(int, int);
+Adafruit_BMP085 bmp;
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(9600);
+  if (!bmp.begin()) {
+    Serial.println("Could not find a valid BMP180 sensor, check wiring!");
+    while (1) {}
+  }
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
+  float temperature = bmp.readTemperature();
+  long pressure = bmp.readPressure();
+  float altitude = bmp.readAltitude();
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  Serial.print("Temperature = ");
+  Serial.print(temperature);
+  Serial.println(" *C");
+
+  Serial.print("Pressure = ");
+  Serial.print(pressure);
+  Serial.println(" Pa");
+
+  Serial.print("Altitude = ");
+  Serial.print(altitude);
+  Serial.println(" meters");
+
+  delay(1000);
 }
