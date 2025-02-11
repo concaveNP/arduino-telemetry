@@ -30,5 +30,7 @@ void loop() {
   Serial.print(altitude);
   Serial.println(" meters");
 
+  Serial.println("");
+
   delay(1000);
 }
